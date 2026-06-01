@@ -1,0 +1,36 @@
+#!/bin/sh
+# Maven wrapper script for Unix/Linux/macOS
+set -e
+
+# Find the project basedir
+MAVEN_PROJECTBASEDIR="${MAVEN_BASEDIR:-}"
+finddir () {
+  _dir="$1"
+  while [ ! -f "$_dir/.mvn/wrapper/maven-wrapper.properties" ] && [ "$_dir" != "/" ]; do
+    _dir=$(dirname "$_dir")
+  done
+  echo "$_dir"
+}
+if [ -z "$MAVEN_PROJECTBASEDIR" ]; then
+  MAVEN_PROJECTBASEDIR=$(finddir "$(pwd)")
+fi
+
+MAVEN_WRAPPER_PROPERTIES="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties"
+DISTRIBUTION_URL=$(grep -E '^distributionUrl=' "$MAVEN_WRAPPER_PROPERTIES" | sed 's/distributionUrl=//')
+
+MAVEN_HOME="${HOME}/.m2/wrapper/dists/$(basename "$DISTRIBUTION_URL" .zip)"
+MAVEN_BIN="$MAVEN_HOME/bin/mvn"
+
+if [ ! -f "$MAVEN_BIN" ]; then
+  echo "Downloading Maven from $DISTRIBUTION_URL..."
+  mkdir -p "$(dirname "$MAVEN_HOME")"
+  TMP_ZIP=$(mktemp)
+  curl -fsSL "$DISTRIBUTION_URL" -o "$TMP_ZIP"
+  unzip -q "$TMP_ZIP" -d "$(dirname "$MAVEN_HOME")"
+  rm "$TMP_ZIP"
+  # The zip extracts to a versioned dir; find it
+  EXTRACTED=$(find "$(dirname "$MAVEN_HOME")" -maxdepth 1 -name "apache-maven-*" -type d | head -1)
+  mv "$EXTRACTED" "$MAVEN_HOME"
+fi
+
+exec "$MAVEN_BIN" "$@"

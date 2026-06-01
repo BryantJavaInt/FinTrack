@@ -1,0 +1,35 @@
+# Maven
+fintrack/backend/target/
+fintrack/backend/.mvn/wrapper/maven-wrapper.jar
+!fintrack/backend/.mvn/wrapper/maven-wrapper.properties
+
+# Node
+fintrack/frontend/node_modules/
+fintrack/frontend/dist/
+fintrack/frontend/.env.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.class
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.*
+*.env.local
+application-local.properties
+
+# Docker volumes
+postgres_data/
+
+# Local tooling
+.claude/
+CLAUDE.md
+
+# Logs
+*.log
